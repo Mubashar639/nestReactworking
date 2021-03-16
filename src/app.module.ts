@@ -9,6 +9,9 @@ import { join } from 'path';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client/build'),
+    }),
+    ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'),
     }),
     MongooseModule.forRoot(config.DB_URL),
