@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Product } from './interface/product.schema';
-import { CreateProductDTO } from './dto/product.dto';
+import { CreateProductDTO, pagelimit } from './dto/product.dto';
 @Injectable()
 export class ProductService {
   constructor(@InjectModel('Product') private ProductModel: Model<Product>) {}
@@ -10,8 +10,11 @@ export class ProductService {
     const createdCat = new this.ProductModel(CreateProductDTO);
     return createdCat.save();
   }
-  async findAll(): Promise<any> {
-    return await this.ProductModel.find().exec();
+  async findAll(pagelimit: pagelimit): Promise<any> {
+    return await this.ProductModel.find()
+      .limit(parseInt(pagelimit.limit))
+      .skip(parseInt(pagelimit.limit) * (parseInt(pagelimit.page) - 1))
+      .exec();
   }
   async findById(id): Promise<Product> {
     const customer = await this.ProductModel.findById(id).exec();

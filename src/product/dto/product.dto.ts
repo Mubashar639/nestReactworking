@@ -9,3 +9,10 @@ export class CreateProductDTO {
   @ApiProperty()
   readonly description: string;
 }
+
+export class pagelimit {
+  @ApiProperty()
+  readonly page: string;
+  @ApiProperty()
+  readonly limit: string;
+}
